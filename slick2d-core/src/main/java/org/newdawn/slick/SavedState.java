@@ -3,12 +3,8 @@ package org.newdawn.slick;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.jnlp.ServiceManager;
-
 import org.newdawn.slick.muffin.FileMuffin;
 import org.newdawn.slick.muffin.Muffin;
-import org.newdawn.slick.muffin.WebstartMuffin;
-import org.newdawn.slick.util.Log;
 
 /**
  * A utility to allow game setup/state to be stored locally. This utility will adapt to the
@@ -38,12 +34,7 @@ public class SavedState {
 	public SavedState(String fileName) throws SlickException {
 		this.fileName = fileName;
 		
-		if (isWebstartAvailable()) {
-			muffin = new WebstartMuffin();
-		}
-		else {
-			muffin = new FileMuffin();
-		}
+		muffin = new FileMuffin();
 		
 		try {
 			load();
@@ -158,19 +149,10 @@ public class SavedState {
 	
 	/**
 	 * Quick test to see if running through Java webstart
-	 * 
+	 * @deprecated
 	 * @return True if jws running
 	 */
 	private boolean isWebstartAvailable() {
-		try {
-			Class.forName("javax.jnlp.ServiceManager");
-			// this causes to go and see if the service is available
-			ServiceManager.lookup("javax.jnlp.PersistenceService");
-			Log.info("Webstart detected using Muffins");
-		} catch (Exception e) {
-			Log.info("Using Local File System");
-			return false;
-		}
-		return true;
+		return false;
 	}
 }
